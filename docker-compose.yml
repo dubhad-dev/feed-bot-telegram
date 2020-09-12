@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  bot:
+    build: .
+    command: python bot.py
+    restart: always
+    volumes:
+      - data:/data
+    environment:
+      - API_ID
+      - API_HASH
+      - BOT_TOKEN
+      - USER_ID
+      - MARK_UNREAD
+
+volumes:
+  data:
