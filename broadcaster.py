@@ -102,6 +102,7 @@ class Broadcaster:
             for fm in feed_msgs:
                 if not self.is_msgs_identical(m, fm):
                     ok_msgs.append(m)
+        print(ok_msgs)
 
         return [m for m in ok_msgs if isinstance(m, Message)]
 
