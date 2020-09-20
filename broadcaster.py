@@ -54,7 +54,6 @@ class Broadcaster:
         msgs = await self._messages(ch)
         if msgs:
             try:
-                await client.send_read_acknowledge(ch.link, msgs)
                 await client.forward_messages(ch.feed, msgs)
             # TODO feed unreachable
             except ConnectionError:
