@@ -123,6 +123,6 @@ class Broadcaster:
     def is_msgs_identical(m1: Message, m2: Message):
         dict1 = m1.__dict__
         dict2 = m2.__dict__
-        dict1.id = dict2.id = None
-        dict1.date = dict2.date = None
+        dict1["id"] = dict2["id"] = None
+        dict1["date"] = dict2["date"] = None
         return dict1 == dict2
