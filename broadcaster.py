@@ -83,7 +83,6 @@ class Broadcaster:
                                              min_id=ch.last_id,
                                              wait_time=5,
                                              reverse=True)
-            print(msgs[-1])
         except ConnectionError:
             await asyncio.sleep(60)
         except (ValueError, ChannelPrivateError):
@@ -98,8 +97,13 @@ class Broadcaster:
                          + '\nerror code ->'
                          + str(e.code))
         feed_msgs = await client.get_messages(ch.feed, 50)
-        print(feed_msgs[-1])
-        return [m for m in msgs if isinstance(m, Message) and m not in feed_msgs]
+        ok_msgs = []
+        for m in msgs:
+            for fm in feed_msgs:
+                if not self.is_msgs_identical(m, fm):
+                    ok_msgs.append(m)
+
+        return [m for m in ok_msgs if isinstance(m, Message)]
 
     # TODO async def _forward_albums(self, msgs: TotalList):
 
@@ -113,3 +117,11 @@ class Broadcaster:
             _, coro = self._queue.popitem(last=False)
             self._current_task = asyncio.create_task(coro)
             self._current_task.add_done_callback(self._new_task)
+
+    @staticmethod
+    def is_msgs_identical(m1: Message, m2: Message):
+        dict1 = m1.__dict__
+        dict2 = m2.__dict__
+        dict1.id = dict2.id = None
+        dict1.date = dict2.date = None
+        return dict1 == dict2
