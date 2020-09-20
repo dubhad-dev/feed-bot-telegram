@@ -96,15 +96,15 @@ class Broadcaster:
                          + e.message
                          + '\nerror code ->'
                          + str(e.code))
-        feed_msgs = await client.get_messages(ch.feed, 50, wait_time=5)
-        ok_msgs = []
-        for m in msgs:
-            for fm in feed_msgs:
-                if not self.is_msgs_identical(m, fm):
-                    ok_msgs.append(m)
-        print(ok_msgs)
+        # feed_msgs = await client.get_messages(ch.feed, 50, wait_time=5)
+        # ok_msgs = []
+        # for m in msgs:
+        #     for fm in feed_msgs:
+        #         if not self.is_msgs_identical(m, fm):
+        #             ok_msgs.append(m)
+        # print(ok_msgs)
 
-        return [m for m in ok_msgs if isinstance(m, Message)]
+        return [m for m in msgs if isinstance(m, Message)]
 
     # TODO async def _forward_albums(self, msgs: TotalList):
 
