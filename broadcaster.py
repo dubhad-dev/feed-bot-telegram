@@ -1,5 +1,6 @@
 import asyncio
 from collections import OrderedDict
+from itertools import combinations
 
 from telethon.tl.types import Message
 from telethon.errors import RPCError, ChannelPrivateError
@@ -55,6 +56,10 @@ class Broadcaster:
         if msgs:
             try:
                 await client.forward_messages(ch.feed, msgs)
+                feed_messages = await client.get_messages(ch.feed, 30)
+                for m1, m2 in combinations(feed_messages, 2):
+                    if self.is_msgs_identical(m1, m2):
+                        await client.delete_messages(ch.feed, m1.id)
             # TODO feed unreachable
             except ConnectionError:
                 await asyncio.sleep(60)
