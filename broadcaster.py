@@ -96,7 +96,7 @@ class Broadcaster:
                          + e.message
                          + '\nerror code ->'
                          + str(e.code))
-        feed_msgs = await client.get_messages(ch.feed, 50)
+        feed_msgs = await client.get_messages(ch.feed, 50, wait_time=5)
         ok_msgs = []
         for m in msgs:
             for fm in feed_msgs:
