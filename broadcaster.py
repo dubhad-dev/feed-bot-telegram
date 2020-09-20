@@ -83,7 +83,7 @@ class Broadcaster:
                                              min_id=ch.last_id,
                                              wait_time=5,
                                              reverse=True)
-            print(msgs)
+            print(msgs[-1])
         except ConnectionError:
             await asyncio.sleep(60)
         except (ValueError, ChannelPrivateError):
@@ -98,7 +98,7 @@ class Broadcaster:
                          + '\nerror code ->'
                          + str(e.code))
         feed_msgs = await client.get_messages(ch.feed, 50)
-        print(feed_msgs)
+        print(feed_msgs[-1])
         return [m for m in msgs if isinstance(m, Message) and m not in feed_msgs]
 
     # TODO async def _forward_albums(self, msgs: TotalList):
